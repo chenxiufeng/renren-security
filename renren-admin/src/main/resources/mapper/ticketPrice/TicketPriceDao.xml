@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.ticketPrice.dao.TicketPriceDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.ticketPrice.entity.TicketPriceEntity" id="ticketPriceMap">
+        <result property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="start" column="start"/>
+        <result property="end" column="end"/>
+        <result property="current" column="current"/>
+        <result property="high" column="high"/>
+        <result property="low" column="low"/>
+        <result property="quoteBuy1" column="quote_buy1"/>
+        <result property="quoteSale1" column="quote_sale1"/>
+        <result property="quantity" column="quantity"/>
+        <result property="money" column="money"/>
+        <result property="buy1Quantity" column="buy1_quantity"/>
+        <result property="buy1Price" column="buy1_price"/>
+        <result property="buy2Quantity" column="buy2_quantity"/>
+        <result property="buy2Price" column="buy2_price"/>
+        <result property="buy3Quantity" column="buy3_quantity"/>
+        <result property="buy3Price" column="buy3_price"/>
+        <result property="buy4Quantity" column="buy4_quantity"/>
+        <result property="buy4Price" column="buy4_price"/>
+        <result property="buy5Quantity" column="buy5_quantity"/>
+        <result property="buy5Price" column="buy5_price"/>
+        <result property="sale1Quantity" column="sale1_quantity"/>
+        <result property="sale1Price" column="sale1_price"/>
+        <result property="sale2Quantity" column="sale2_quantity"/>
+        <result property="sale2Price" column="sale2_price"/>
+        <result property="sale3Quantity" column="sale3_quantity"/>
+        <result property="sale3Price" column="sale3_price"/>
+        <result property="sale4Quantity" column="sale4_quantity"/>
+        <result property="sale4Price" column="sale4_price"/>
+        <result property="sale5Quantity" column="sale5_quantity"/>
+        <result property="sale5Price" column="sale5_price"/>
+        <result property="time" column="time"/>
+    </resultMap>
+
+
+</mapper>

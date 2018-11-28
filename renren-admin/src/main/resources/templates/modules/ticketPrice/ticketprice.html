@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+			<#if shiro.hasPermission("ticketPrice:ticketprice:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("ticketPrice:ticketprice:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("ticketPrice:ticketprice:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">代号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.code" placeholder="代号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.name" placeholder="名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">今日开盘价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.start" placeholder="今日开盘价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">昨日收盘价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.end" placeholder="昨日收盘价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">当前价格</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.current" placeholder="当前价格"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">今日最高价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.high" placeholder="今日最高价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">今日最低价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.low" placeholder="今日最低价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">竞买价，即“买一”报价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.quoteBuy1" placeholder="竞买价，即“买一”报价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">竞卖价，即“卖一”报价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.quoteSale1" placeholder="竞卖价，即“卖一”报价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">成交的股票数,通常把该值除以一百</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.quantity" placeholder="成交的股票数,通常把该值除以一百"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">成交金额,通常把该值除以一万,万元”为成交金额的单位</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.money" placeholder="成交金额,通常把该值除以一万,万元”为成交金额的单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“买一”申请数量</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.buy1Quantity" placeholder="“买一”申请数量"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“买一”报价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.buy1Price" placeholder="“买一”报价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“买二”申请数量</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.buy2Quantity" placeholder="“买二”申请数量"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“买二”报价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.buy2Price" placeholder="“买二”报价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“买三”申请数量</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.buy3Quantity" placeholder="“买三”申请数量"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“买三”报价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.buy3Price" placeholder="“买三”报价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“买四”申请数量</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.buy4Quantity" placeholder="“买四”申请数量"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“买四”报价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.buy4Price" placeholder="“买四”报价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“买五”申请数量</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.buy5Quantity" placeholder="“买五”申请数量"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“买五”报价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.buy5Price" placeholder="“买五”报价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“卖一”申请数量</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.sale1Quantity" placeholder="“卖一”申请数量"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“卖一”报价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.sale1Price" placeholder="“卖一”报价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“卖二”申请数量</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.sale2Quantity" placeholder="“卖二”申请数量"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“卖二”报价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.sale2Price" placeholder="“卖二”报价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“卖三”申请数量</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.sale3Quantity" placeholder="“卖三”申请数量"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“卖三”报价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.sale3Price" placeholder="“卖三”报价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“卖四”申请数量</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.sale4Quantity" placeholder="“卖四”申请数量"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“卖四”报价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.sale4Price" placeholder="“卖四”报价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“卖五”申请数量</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.sale5Quantity" placeholder="“卖五”申请数量"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">“卖五”报价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.sale5Price" placeholder="“卖五”报价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="ticketPrice.time" placeholder="时间"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/ticketPrice/ticketprice.js?_${.now?long}"></script>
+</body>
+</html>
