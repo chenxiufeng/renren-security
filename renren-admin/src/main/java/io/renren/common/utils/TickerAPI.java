@@ -54,7 +54,7 @@ public class TickerAPI {
 		t.setSale4Price(new BigDecimal(priceArr[27]));
 		t.setSale5Price(new BigDecimal(priceArr[29]));
 		String date=priceArr[30]+" "+priceArr[31];
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-DD-mm HH:mm:ss");
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date parse = sdf.parse(date);
 		t.setTime(parse);
 		return t;
