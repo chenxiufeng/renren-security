@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+
 import io.renren.modules.ticket.entity.TicketEntity;
 import io.renren.modules.ticket.service.TicketService;
+import io.renren.common.e.DeleteEnum;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
 
@@ -61,7 +64,13 @@ public class TicketController {
     @RequestMapping("/save")
     @RequiresPermissions("ticket:ticket:save")
     public R save(@RequestBody TicketEntity ticket){
-        ticketService.insert(ticket);
+    	//先判断是否已经存在
+    	String code = ticket.getCode();
+    	int selectCount = ticketService.selectCount(new EntityWrapper<TicketEntity>().eq("code", code).eq("del_flag", DeleteEnum.NOT_DELETE.toInt()));
+    	if(selectCount!=0){
+    		return R.error("已存在！");
+    	}
+    	ticketService.insert(ticket);
 
         return R.ok();
     }
