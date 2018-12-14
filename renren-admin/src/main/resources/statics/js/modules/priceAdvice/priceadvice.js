@@ -4,6 +4,7 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
+            { label: '代码', name: 'code', index: 'code', width: 50},
 			{ label: '名称', name: 'name', index: 'name', width: 80 }, 			
 			{ label: '推荐价', name: 'advicePrice', index: 'advice_price', width: 80 }, 			
 			{ label: '当前价', name: 'currentPrice', index: 'current_price', width: 80 }			
@@ -30,7 +31,15 @@ $(function () {
         },
         gridComplete:function(){
         	//隐藏grid底部滚动条
-        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });
+            //循环判断是否为加急，加急添加背景色
+            var ids = $("#jqGrid").getDataIDs();
+            for(var i=0;i<ids.length;i++){
+                var rowData = $("#jqGrid").getRowData(ids[i]);
+                if(rowData.currentPrice<=rowData.advicePrice){//如果加急状态等于1，则背景色置绿显示
+                    $('#'+ids[i]).find("td").css("background-color", "pink");
+                }
+            }
         }
     });
 });
@@ -40,7 +49,9 @@ var vm = new Vue({
 	data:{
 		showList: true,
 		title: null,
-		priceAdvice: {}
+		updateVisible:false,
+		priceAdvice: {id:'',code:'',name:'',advicePrice:'',currentPrice:''},
+        formLabelWidth: '120px'
 	},
 	methods: {
 		query: function () {
@@ -56,10 +67,8 @@ var vm = new Vue({
 			if(id == null){
 				return ;
 			}
-			vm.showList = false;
-            vm.title = "修改";
-            
             vm.getInfo(id)
+            vm.updateVisible = true;
 		},
 		saveOrUpdate: function (event) {
 			var url = vm.priceAdvice.id == null ? "priceAdvice/priceadvice/save" : "priceAdvice/priceadvice/update";
@@ -71,6 +80,7 @@ var vm = new Vue({
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){
+                            vm.updateVisible=false;
 							vm.reload();
 						});
 					}else{

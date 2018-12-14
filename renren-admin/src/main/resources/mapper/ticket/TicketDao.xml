@@ -7,8 +7,7 @@
     <resultMap type="io.renren.modules.ticket.entity.TicketEntity" id="ticketMap">
         <result property="id" column="id"/>
         <result property="code" column="code"/>
+        <result property="advicePrice" column="advice_price"/>
         <result property="delFlag" column="del_flag"/>
     </resultMap>
-
-
 </mapper>

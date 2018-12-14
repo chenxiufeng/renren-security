@@ -4,7 +4,8 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '编号', name: 'code', index: 'code', width: 80 }, 			
+			{ label: '编号', name: 'code', index: 'code', width: 80 },
+            { label: '推荐价', name: 'advicePrice', index: 'advice_price', width: 80 },
 			{ label: '0：正常，1：删除', name: 'delFlag', index: 'del_flag', width: 80 }			
         ],
 		viewrecords: true,

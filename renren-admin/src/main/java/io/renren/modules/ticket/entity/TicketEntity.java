@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -26,6 +27,12 @@ public class TicketEntity implements Serializable {
 	 * 编号
 	 */
 	private String code;
+	/**
+	 * 推荐价
+	 */
+	private BigDecimal advicePrice;
+
+
 	/**
 	 * 0：正常，1：删除
 	 */
@@ -66,5 +73,13 @@ public class TicketEntity implements Serializable {
 	 */
 	public Boolean getDelFlag() {
 		return delFlag;
+	}
+
+	public BigDecimal getAdvicePrice() {
+		return advicePrice;
+	}
+
+	public void setAdvicePrice(BigDecimal advicePrice) {
+		this.advicePrice = advicePrice;
 	}
 }

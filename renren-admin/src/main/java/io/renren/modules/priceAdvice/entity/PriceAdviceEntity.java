@@ -27,6 +27,11 @@ public class PriceAdviceEntity implements Serializable {
 	 * 名称
 	 */
 	private String name;
+
+	/**
+	 * 代码
+	 */
+	private String code;
 	/**
 	 * 推荐价
 	 */
@@ -83,5 +88,13 @@ public class PriceAdviceEntity implements Serializable {
 	 */
 	public BigDecimal getCurrentPrice() {
 		return currentPrice;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 }

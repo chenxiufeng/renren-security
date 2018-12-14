@@ -12,44 +12,34 @@
             <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
 			</#if>
 			<#if shiro.hasPermission("priceAdvice:priceadvice:update")>
-            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+             <el-button type="primary" icon="el-icon-edit" @click="update" size="small">修改</el-button>
 			</#if>
 			<#if shiro.hasPermission("priceAdvice:priceadvice:delete")>
             <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
 			</#if>
+
         </div>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
     </div>
 
-    <div v-show="!showList" class="panel panel-default">
-        <div class="panel-heading">{{title}}</div>
-        <form class="form-horizontal">
-														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">名称</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="priceAdvice.name" placeholder="名称"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">推荐价</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="priceAdvice.advicePrice" placeholder="推荐价"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">当前价</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="priceAdvice.currentPrice" placeholder="当前价"/>
-                        </div>
-                    </div>
-							            <div class="form-group">
-                <div class="col-sm-2 control-label"></div>
-                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
-                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
-            </div>
-        </form>
-    </div>
+    <el-dialog title="修改" :visible.sync="updateVisible" :show-close="false">
+        <el-form :model="priceAdvice">
+            <el-form-item label="代码" :label-width="formLabelWidth">
+                <span>{{priceAdvice.code}}</span>
+            </el-form-item>
+            <el-form-item label="名称" :label-width="formLabelWidth">
+                    <span>{{priceAdvice.name}}</span>
+            </el-form-item>
+            <el-form-item label="推荐价格" :label-width="formLabelWidth">
+                <el-input v-model.number="priceAdvice.advicePrice" ></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="updateVisible =false">取 消</el-button>
+            <el-button type="primary" @click="saveOrUpdate">确 定</el-button>
+        </div>
+    </el-dialog>
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/priceAdvice/priceadvice.js?_${.now?long}"></script>
