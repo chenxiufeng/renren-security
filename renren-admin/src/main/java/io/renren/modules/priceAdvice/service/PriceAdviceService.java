@@ -2,6 +2,7 @@ package io.renren.modules.priceAdvice.service;
 
 import com.baomidou.mybatisplus.service.IService;
 import io.renren.common.utils.PageUtils;
+import io.renren.common.utils.R;
 import io.renren.modules.priceAdvice.entity.PriceAdviceEntity;
 
 import java.util.List;
@@ -19,5 +20,7 @@ public interface PriceAdviceService extends IService<PriceAdviceEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     List<PriceAdviceEntity> exportExcel(Map<String,Object> params);
+
+    R seeDetail(String code);
 }
 

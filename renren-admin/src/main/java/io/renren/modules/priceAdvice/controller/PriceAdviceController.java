@@ -9,6 +9,7 @@ import com.alibaba.druid.support.json.JSONUtils;
 import io.renren.common.utils.FileUtil;
 import io.renren.common.utils.JsonUtils;
 import io.renren.common.validator.ValidatorUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -111,5 +112,14 @@ public class PriceAdviceController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    //查看阶梯价详情
+    @RequestMapping("/seeDetail/{code}")
+    public R seeDetail(@PathVariable("code") String code){
+        if(StringUtils.isBlank(code)){
+            return R.error("查询信息不存在!");
+        }
+        return  priceAdviceService.seeDetail(code);
     }
 }

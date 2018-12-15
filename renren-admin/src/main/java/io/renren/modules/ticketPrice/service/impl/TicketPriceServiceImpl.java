@@ -1,6 +1,9 @@
 package io.renren.modules.ticketPrice.service.impl;
 
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -24,6 +27,11 @@ public class TicketPriceServiceImpl extends ServiceImpl<TicketPriceDao, TicketPr
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<TicketPriceEntity> getPriceByCode(String code) {
+        return this.baseMapper.getPriceByCode(code);
     }
 
 }

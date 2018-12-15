@@ -26,23 +26,12 @@
         <div id="jqGridPager"></div>
     </div>
 
-   <!-- <el-dialog title="修改" :visible.sync="updateVisible" :show-close="false">
-        <el-form :model="priceAdvice">
-            <el-form-item label="代码" :label-width="formLabelWidth">
-                <span>{{priceAdvice.code}}</span>
-            </el-form-item>
-            <el-form-item label="名称" :label-width="formLabelWidth">
-                    <span>{{priceAdvice.name}}</span>
-            </el-form-item>
-            <el-form-item label="推荐价格" :label-width="formLabelWidth">
-                <el-input v-model.number="priceAdvice.advicePrice" ></el-input>
-            </el-form-item>
-        </el-form>
+    <el-dialog title="详情" :visible.sync="detailVisible" :show-close="false" >
+        <div id="main" style="width: 600px;height:400px;"></div>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="updateVisible =false">取 消</el-button>
-            <el-button type="primary" @click="saveOrUpdate">确 定</el-button>
+            <el-button type="primary" @click="detailVisible =false">确 定</el-button>
         </div>
-    </el-dialog>-->
+    </el-dialog>
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/priceAdvice/priceadvice.js?_${.now?long}"></script>
