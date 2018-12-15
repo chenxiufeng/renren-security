@@ -41,6 +41,6 @@
     </resultMap>
 
     <select id="getPriceByCode" resultMap="ticketPriceMap">
-          select current,time from ticket_price where  code=#{code} order by time desc
+          select current,time from ticket_price where  code=#{code} order by time asc
     </select>
 </mapper>
