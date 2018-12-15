@@ -72,17 +72,16 @@ public class TicketPriceTask {
 							updateList.add(priceAdvice);
 						}
 					}
-					if(addList.size()>0){
-						priceAdviceService.insertBatch(addList);
-					}
-					if(updateList.size()>0){
-						priceAdviceService.updateBatchById(updateList);
-					}
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
     		}
     	}
-    	
+		if(addList.size()>0){
+			priceAdviceService.insertBatch(addList);
+		}
+		if(updateList.size()>0){
+			priceAdviceService.updateBatchById(updateList);
+		}
     }
 }
