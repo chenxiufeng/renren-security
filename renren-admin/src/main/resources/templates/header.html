@@ -3,17 +3,29 @@
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrap.min.css">
 <link rel="stylesheet" href="${request.contextPath}/statics/css/font-awesome.min.css">
-<link rel="stylesheet" href="${request.contextPath}/statics/plugins/jqgrid/ui.jqgrid-bootstrap.css">
 <link rel="stylesheet" href="${request.contextPath}/statics/plugins/ztree/css/metroStyle/metroStyle.css">
 <link rel="stylesheet" href="${request.contextPath}/statics/css/main.css">
-<link rel="stylesheet" href="${request.contextPath}/statics/plugins/element/element.css">
-
+<link rel="stylesheet" href="${request.contextPath}/statics/plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 <script src="${request.contextPath}/statics/libs/jquery.min.js"></script>
-<script src="${request.contextPath}/statics/plugins/layer/layer.js"></script>
-<script src="${request.contextPath}/statics/libs/bootstrap.min.js"></script>
-<script src="${request.contextPath}/statics/libs/vue.min.js"></script>
 <script src="${request.contextPath}/statics/plugins/jqgrid/grid.locale-cn.js"></script>
 <script src="${request.contextPath}/statics/plugins/jqgrid/jquery.jqGrid.min.js"></script>
-<script src="${request.contextPath}/statics/plugins/ztree/jquery.ztree.all.min.js"></script>
 <script src="${request.contextPath}/statics/js/common.js"></script>
+<!--直接引入本地的发现placeHolder属性不展示-->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="${request.contextPath}/statics/plugins/element/element.js"></script>
+<!-- 引入组件库 -->
+<!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+<!--
+<script>
+    window.onerror=fnErrorTrap;
+    function fnErrorTrap(sMsg,sUrl,sLine){
+        var errContent =
+            '<p>行号:'+sLine+'</p>'+
+            '<p>URL:'+sUrl+'</p>'+
+            '<p style="color: red">错误信息:【'+sMsg+'】,请联系管理员!</p>';
+        alert(errContent);
+        return false;
+    }
+</script>-->

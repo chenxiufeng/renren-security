@@ -7,7 +7,9 @@
 <body>
 <div id="rrapp" v-cloak>
     <div v-show="showList">
+
         <div class="grid-btn">
+            <el-input style="width: 150px" v-model="q.code" size="small" placeholder="名称"></el-input>
 			<#if shiro.hasPermission("ticket:ticket:save")>
             <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
 			</#if>
@@ -22,28 +24,20 @@
         <div id="jqGridPager"></div>
     </div>
 
-    <div v-show="!showList" class="panel panel-default">
-        <div class="panel-heading">{{title}}</div>
-        <form class="form-horizontal">
-														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">编号</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="ticket.code" placeholder="编号"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">0：正常，1：删除</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="ticket.delFlag" placeholder="0：正常，1：删除"/>
-                        </div>
-                    </div>
-							            <div class="form-group">
-                <div class="col-sm-2 control-label"></div>
-                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
-                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+        <el-dialog :title="title" :visible.sync="editVisible" :show-close="false">
+            <el-form :model="ticket">
+                <el-form-item label="代码" :label-width="formLabelWidth">
+                    <el-input v-model="ticket.code" autocomplete="off" style="width:150px"></el-input>
+                </el-form-item>
+                <el-form-item label="推荐价" :label-width="formLabelWidth">
+                     <el-input-number v-model="ticket.advicePrice" controls-position="right"  :min="1" :max="100"></el-input-number>元
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="editVisible = false">取 消</el-button>
+                <el-button type="primary" @click="saveOrUpdate">确 定</el-button>
             </div>
-        </form>
-    </div>
+        </el-dialog>
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/ticket/ticket.js?_${.now?long}"></script>

@@ -1,0 +1,32 @@
+.files_upload{min-width:600px;position:fixed; bottom:2px; right:10px;border-top-left-radius: 7px;border-top-right-radius: 7px; border: 1px solid #e2e2e2;box-shadow: 0 0 10px #ccc; z-index:9999;background: #fff; overflow:hidden;color: #424e67;}
+.files_upload .uploader_list_all{ position: relative;overflow: hidden;overflow-y: auto;height:350px; margin-top: -1px;}
+.dialog-header{ height:45px; line-height:45px; font-size:16px; padding:0px 20px; border-bottom:1px solid #dddddd;}
+.dialog-control{float:right; font-size:16px;}
+.dialog-control span{margin-left:10px; cursor:pointer;}
+.tips{ padding:0px 10px; height:20px; background:#66CC33;}
+.tips .text{float:left;}
+.tips .close{float:right;}
+.uploader-list-header,.container_uploaderList li{height:30px; overflow:hidden; line-height:30px; border-bottom:1px solid #dddddd; padding:0px 10px;}
+.uploader-list-header span, .container_uploaderList li div{float:left; width:25%; text-align:center; overflow:hidden;text-overflow:ellipsis;white-space: nowrap;}
+.file-status span{display:none;}
+.file-operate{cursor:pointer;}
+.webuploader-element-invisible{display:none;}
+.container_uploaderList{padding:0px;}
+.file-status .waiting ,.file-status .prepare ,.file-status .uploading ,.file-status .error ,.file-status .pause ,.file-status .cancel ,.file-status .success{ display:block;}
+.area_mend_body{ padding:20px 25px; background:#FFFFFF; margin-top:10px; overflow:hidden; }
+.member_file_list{width:100%;}
+.member_file_list tr{ border:1px solid #eaeff8;}
+.member_file_list tr td{padding:10px 20px; font-size:12px; color:#666666;}
+.member_file_list tr td a{display:inline-block; width:60px; height:24px; border:1px solid #3b8cff; border-radius:3px; line-height:24px; text-align:center; color:#3b8cff; margin-right:5px;}
+.member_file_list tr td a i{display:inline-block; width:14px; height:14px;vertical-align: text-top;margin-right:3px;}
+.file_download i{background: url(file_ico.png)  -3px -60px no-repeat; }
+.file_dale_only i{background: url(file_ico.png) -4px -85px no-repeat; }
+.member_file_list tr td span i{display:inline-block; width:24px; height:24px;vertical-align: text-top;margin-right:3px;background: url(file_ico.png) -4px -115px no-repeat;    vertical-align: middle;}
+.member_file_list thead tr{background:#f6faff;}
+
+.data-icon-before, .icon {
+    font-family: iconfonts,sans-serif;
+}
+@font-face {
+    font-family:iconfonts;src:url(iconfonts.eot);src:url(fonts/iconfonts.eot?#ie9) format("embedded-opentype"),url(iconfonts.woff) format("woff"),url(iconfonts.ttf) format("truetype"),url(iconfonts.svg#webfontMFqI76bT) format("svg");font-weight:400;font-style:normal;
+}
