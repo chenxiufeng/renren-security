@@ -38,9 +38,9 @@ $(function () {
 			{ label: '时间', name: 'time', index: 'time', width: 80 }			
         ],
 		viewrecords: true,
-        height: 385,
-        rowNum: 10,
-		rowList : [10,30,50],
+        height: window.innerHeight - 120,
+        rowNum: 25,
+        rowList : [25,50,75],
         rownumbers: true, 
         rownumWidth: 25, 
         autowidth:true,

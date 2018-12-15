@@ -1,5 +1,6 @@
 package io.renren.modules.priceAdvice.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
@@ -22,23 +23,28 @@ public class PriceAdviceEntity implements Serializable {
 	 * 自增id
 	 */
 	@TableId
+
 	private Integer id;
 	/**
 	 * 名称
 	 */
+	@Excel(name = "名称", orderNum = "1")
 	private String name;
 
 	/**
 	 * 代码
 	 */
+	@Excel(name = "代码", orderNum = "2")
 	private String code;
 	/**
 	 * 推荐价
 	 */
+	@Excel(name = "推荐价", orderNum = "3")
 	private BigDecimal advicePrice;
 	/**
 	 * 当前价
 	 */
+	@Excel(name = "当前价", orderNum = "4")
 	private BigDecimal currentPrice;
 
 	/**

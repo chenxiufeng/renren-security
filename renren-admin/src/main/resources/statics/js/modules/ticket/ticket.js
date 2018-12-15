@@ -9,9 +9,9 @@ $(function () {
 			{ label: '0：正常，1：删除', name: 'delFlag', index: 'del_flag', width: 80 }			
         ],
 		viewrecords: true,
-        height: 385,
-        rowNum: 10,
-		rowList : [10,30,50],
+        height: window.innerHeight - 120,
+        rowNum: 25,
+        rowList : [25,50,75],
         rownumbers: true, 
         rownumWidth: 25, 
         autowidth:true,
@@ -23,6 +23,9 @@ $(function () {
             total: "page.totalPage",
             records: "page.totalCount"
         },
+		postData:{
+        	code:'',
+		},
         prmNames : {
             page:"page", 
             rows:"limit", 
@@ -39,15 +42,20 @@ var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		showList: true,
+		editVisible:false,
 		title: null,
-		ticket: {}
+		ticket: {},
+        formLabelWidth: '120px',
+        q:{
+			code:'',
+		}
 	},
 	methods: {
 		query: function () {
 			vm.reload();
 		},
 		add: function(){
-			vm.showList = false;
+			vm.editVisible = true;
 			vm.title = "新增";
 			vm.ticket = {};
 		},
@@ -56,10 +64,9 @@ var vm = new Vue({
 			if(id == null){
 				return ;
 			}
-			vm.showList = false;
             vm.title = "修改";
-            
             vm.getInfo(id)
+            vm.editVisible = true;
 		},
 		saveOrUpdate: function (event) {
 			var url = vm.ticket.id == null ? "ticket/ticket/save" : "ticket/ticket/update";
@@ -109,10 +116,14 @@ var vm = new Vue({
             });
 		},
 		reload: function (event) {
+            vm.editVisible=false;
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
-                page:page
+                page:page,
+				postData:{
+                	'code':vm.q.code,
+				}
             }).trigger("reloadGrid");
 		}
 	}

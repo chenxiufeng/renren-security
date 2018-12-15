@@ -7,23 +7,26 @@
 <body>
 <div id="rrapp" v-cloak>
     <div v-show="showList">
-        <div class="grid-btn">
-			<#if shiro.hasPermission("priceAdvice:priceadvice:save")>
-            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			</#if>
-			<#if shiro.hasPermission("priceAdvice:priceadvice:update")>
-             <el-button type="primary" icon="el-icon-edit" @click="update" size="small">修改</el-button>
-			</#if>
-			<#if shiro.hasPermission("priceAdvice:priceadvice:delete")>
-            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			</#if>
-
+        <div style="margin-bottom: 5px">
+            <el-form :inline="true" :model="q" class="demo-form-inline">
+                <el-form-item label="名称">
+                    <el-input v-model="q.name" size="small" placeholder="名称"></el-input>
+                </el-form-item>
+                <el-form-item label="代码">
+                    <el-input v-model="q.code" size="small" placeholder="代码"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" icon="el-icon-search" @click="query" size="small">查询</el-button>
+                    <el-button type="primary" icon="el-icon-edit" @click="update" size="small">修改</el-button>
+                    <el-button type="primary" icon="el-icon-download" @click="downLoad" size="small">导出</el-button>
+                </el-form-item>
+            </el-form>
         </div>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
     </div>
 
-    <el-dialog title="修改" :visible.sync="updateVisible" :show-close="false">
+   <!-- <el-dialog title="修改" :visible.sync="updateVisible" :show-close="false">
         <el-form :model="priceAdvice">
             <el-form-item label="代码" :label-width="formLabelWidth">
                 <span>{{priceAdvice.code}}</span>
@@ -39,7 +42,7 @@
             <el-button @click="updateVisible =false">取 消</el-button>
             <el-button type="primary" @click="saveOrUpdate">确 定</el-button>
         </div>
-    </el-dialog>
+    </el-dialog>-->
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/priceAdvice/priceadvice.js?_${.now?long}"></script>

@@ -1,6 +1,9 @@
 package io.renren.modules.priceAdvice.service.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -24,6 +27,13 @@ public class PriceAdviceServiceImpl extends ServiceImpl<PriceAdviceDao, PriceAdv
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<PriceAdviceEntity> exportExcel(Map<String, Object> params) {
+        String code=params.get("code").toString();
+        String name=params.get("name").toString();
+        return this.baseMapper.selectList(new EntityWrapper<PriceAdviceEntity>().eq(StringUtils.isNotBlank(code),"code",code).like(StringUtils.isNotBlank(name),"name",name));
     }
 
 }

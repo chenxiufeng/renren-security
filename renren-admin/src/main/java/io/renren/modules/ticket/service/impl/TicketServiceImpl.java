@@ -1,5 +1,6 @@
 package io.renren.modules.ticket.service.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -18,12 +19,10 @@ public class TicketServiceImpl extends ServiceImpl<TicketDao, TicketEntity> impl
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
+        String code = params.get("code").toString();
         Page<TicketEntity> page = this.selectPage(
                 new Query<TicketEntity>(params).getPage(),
-                new EntityWrapper<TicketEntity>()
-        );
-
+                new EntityWrapper<TicketEntity>().eq(StringUtils.isNotBlank(code),"code",code));
         return new PageUtils(page);
     }
-
 }

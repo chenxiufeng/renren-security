@@ -1,8 +1,13 @@
 package io.renren.modules.priceAdvice.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.alibaba.druid.support.json.JSONUtils;
+import io.renren.common.utils.FileUtil;
+import io.renren.common.utils.JsonUtils;
 import io.renren.common.validator.ValidatorUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,8 @@ import io.renren.modules.priceAdvice.service.PriceAdviceService;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -89,4 +96,20 @@ public class PriceAdviceController {
         return R.ok();
     }
 
+    /**
+     * excel 导出
+     */
+    @RequestMapping("/downLoad")
+    public void downLoad(HttpServletRequest request, HttpServletResponse response) {
+        try {
+        String data = request.getParameter("postData");
+        Map<String, Object> params =new HashMap<>();
+        params = JsonUtils.json2map(data);
+        // 查询列表数据
+        List<PriceAdviceEntity> list = priceAdviceService.exportExcel(params);
+        FileUtil.exportExcel(list, "价格明细表", "价格明细表", PriceAdviceEntity.class, "价格.xls", response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

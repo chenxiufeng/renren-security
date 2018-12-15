@@ -50,7 +50,8 @@ public class TicketPriceTask {
 		List<PriceAdviceEntity> updateList=new ArrayList<>();
     	if(ticketList.size()>0){
     		for(int i=0;i<ticketList.size();i++){
-    			String code=ticketList.get(i).getCode();
+				TicketEntity ticketEntity=ticketList.get(i);
+    			String code=ticketEntity.getCode();
     			try {
 					TicketPriceEntity ticketPriceEntity = TickerAPI.getData(code);
 					logger.info("请求参数:"+code);
@@ -62,10 +63,11 @@ public class TicketPriceTask {
 							PriceAdviceEntity priceAdviceEntity=new PriceAdviceEntity();
 							priceAdviceEntity.setCode(code);
 							priceAdviceEntity.setName(ticketPriceEntity.getName());
-							priceAdviceEntity.setAdvicePrice(new BigDecimal(0));
+							priceAdviceEntity.setAdvicePrice(ticketEntity.getAdvicePrice());
 							priceAdviceEntity.setCurrentPrice(ticketPriceEntity.getCurrent());
 							addList.add(priceAdviceEntity);
 						}else{
+							priceAdvice.setAdvicePrice(ticketEntity.getAdvicePrice());
 							priceAdvice.setCurrentPrice(ticketPriceEntity.getCurrent());
 							updateList.add(priceAdvice);
 						}

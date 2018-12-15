@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.service.IService;
 import io.renren.common.utils.PageUtils;
 import io.renren.modules.priceAdvice.entity.PriceAdviceEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface PriceAdviceService extends IService<PriceAdviceEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    List<PriceAdviceEntity> exportExcel(Map<String,Object> params);
 }
 

@@ -10,9 +10,9 @@ $(function () {
 			{ label: '当前价', name: 'currentPrice', index: 'current_price', width: 80 }			
         ],
 		viewrecords: true,
-        height: 385,
-        rowNum: 10,
-		rowList : [10,30,50],
+        height: window.innerHeight - 120,
+        rowNum: 25,
+        rowList : [25,50,75],
         rownumbers: true, 
         rownumWidth: 25, 
         autowidth:true,
@@ -51,7 +51,11 @@ var vm = new Vue({
 		title: null,
 		updateVisible:false,
 		priceAdvice: {id:'',code:'',name:'',advicePrice:'',currentPrice:''},
-        formLabelWidth: '120px'
+        formLabelWidth: '120px',
+		q:{
+			name:'',
+			code:'',
+		}
 	},
 	methods: {
 		query: function () {
@@ -89,6 +93,11 @@ var vm = new Vue({
 				}
 			});
 		},
+		reset:function(){
+			vm.q.name='';
+			vm.q.code='';
+			vm.reload();
+		},
 		del: function (event) {
 			var ids = getSelectedRows();
 			if(ids == null){
@@ -122,8 +131,18 @@ var vm = new Vue({
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
-                page:page
+                page:page,
+                postData:{
+                    'name': vm.q.name,
+					'code':vm.q.code,
+                }
             }).trigger("reloadGrid");
-		}
+		},
+
+        downLoad:function () {
+            //导出excel
+            const data = encodeURIComponent(JSON.stringify(vm.q));
+            window.location.href = baseURL + "priceAdvice/priceadvice/downLoad?postData=" + data;
+        }
 	}
 });
