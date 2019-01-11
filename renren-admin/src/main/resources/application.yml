@@ -6,7 +6,7 @@ server:
     min-spare-threads: 30
   port: 8080
   servlet:
-    context-path: /renren-admin
+    context-path: /
 
 spring:
   profiles:
@@ -35,7 +35,11 @@ spring:
     suffix: .html
     request-context-attribute: request
 
-
+  spring:
+    resources:
+      static-locations: classpath:/resources/,classpath:/static/,file:${web.upload-path}
+web:
+  upload-path: ./renren-admin/src/main/resources/static/download/
 renren:
   redis:
     open: false  # 是否开启redis缓存  true开启   false关闭
@@ -71,3 +75,8 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
     call-setters-on-nulls: true
+
+
+
+
+
