@@ -17,7 +17,7 @@
 <div id="rrapp" v-cloak>
     <el-upload
             class="upload-demo"
-            action="http://47.105.140.191:8080/upload/api"
+            action="http://localhost:8080/upload/api"
             :on-preview="handlePreview"
             :on-remove="handleRemove"
             :file-list="fileList"
@@ -25,6 +25,7 @@
         <el-button size="small" type="primary">点击上传</el-button>
         <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
     </el-upload>
+    <el-button size="small" type="primary" @click="download">点击下载</el-button>
 </div>
 <script src="${request.contextPath}/statics/js/modules/upload/upload.js?_${.now?long}"></script>
 </body>

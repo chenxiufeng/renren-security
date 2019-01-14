@@ -12,6 +12,10 @@ var vm = new Vue({
         },
         handlePreview(file) {
             console.log(file);
+        },
+        download:function () {
+
+            window.location =baseURL+"/upload/download";
         }
     }
 });

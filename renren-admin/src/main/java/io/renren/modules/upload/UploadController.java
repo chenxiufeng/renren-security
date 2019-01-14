@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.UUID;
 
@@ -37,4 +38,41 @@ public class UploadController {
         bos.close();
         return R.ok().put("fileName",fileName);
     }
+
+    @RequestMapping("/download")
+    public R download(HttpServletResponse res){
+        File file = new File(fileUploadPath);
+
+        File[] array =  file.listFiles();
+        //默认下载第一个
+        String  fileName=array[2].getName();
+        res.setHeader("content-type", "application/octet-stream");
+        res.setContentType("application/octet-stream");
+        res.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+        byte[] buff = new byte[1024];
+        BufferedInputStream bis = null;
+        OutputStream os = null;
+        try {
+            os = res.getOutputStream();
+            bis = new BufferedInputStream(new FileInputStream(new File(fileUploadPath+fileName)));
+            int i = bis.read(buff);
+            while (i != -1) {
+                os.write(buff, 0, buff.length);
+                os.flush();
+                i = bis.read(buff);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bis != null) {
+                try {
+                    bis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return R.ok();
+    }
+
 }
