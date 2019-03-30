@@ -40,7 +40,8 @@ $(function () {
             var ids = $("#jqGrid").getDataIDs();
             for(var i=0;i<ids.length;i++){
                 var rowData = $("#jqGrid").getRowData(ids[i]);
-                if(rowData.currentPrice<=rowData.advicePrice){//如果加急状态等于1，则背景色置绿显示
+                if(Number(rowData.currentPrice)<=Number(rowData.advicePrice)){
+                    debugger
                     $('#'+ids[i]).find("td").css("background-color", "pink");
                 }
             }
