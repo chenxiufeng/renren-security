@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>erp订单信息表</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div >
+            <el-input placeholder="订单号" size="small" clearable  v-model.trim="q.orderNo" style="width:180px" @keyup.enter.native="query">
+            </el-input>
+            <el-input placeholder="客户名称" size="small" clearable  v-model.trim="q.memberName" style="width:180px" @keyup.enter.native="query">
+            </el-input>
+            <el-input placeholder="支付方式" size="small" clearable  v-model.trim="q.payment" style="width:180px" @keyup.enter.native="query">
+            </el-input>
+            <el-date-picker
+                    size="small"
+                    style="width: 300px"
+                    v-model="q.createTime"
+                    type="daterange"
+                    align="right"
+                    value-format="yyyy-MM-dd"
+                    unlink-panels
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期">
+            </el-date-picker>
+            <el-button  type="primary" @click="query" plain size="small" icon="el-icon-search">查询</el-button>
+            <el-button  type="primary" @click="reset"  plain size="small" icon="el-icon-refresh">重置</el-button>
+        </div>
+
+        <!--订单列表-->
+        <el-table size="mini" :data="orderData"
+                  ref="orderTable"
+                  highlight-current-row
+                  :header-cell-style="{'text-align':'center'}"
+                  :cell-style="{'text-align':'center'}"
+                  border style="width: 99%;margin-top: 20px">
+            <el-table-column type="index" label="序号"></el-table-column>
+            <el-table-column
+                    type="selection"
+                    width="55">
+            </el-table-column>
+            <el-table-column type="expand">
+                <template slot-scope="props" >
+                    <el-table
+                            size="small"
+                            :data="props.row.orderItemList"
+                            style="width: 100%">
+                        <el-table-column
+                                type="index"
+                                width="50"
+                                label="序号">
+                        </el-table-column>
+                        <el-table-column label="商品编号" prop="skuId" ></el-table-column>
+                        <el-table-column label="图片"    prop="goodsImgUrl">
+                            <!-- 图片的显示 -->
+                            <template slot-scope="scope">
+                                <el-popover
+                                        placement="right"
+                                        title=""
+                                        trigger="hover">
+                                    <img :src="scope.row.goodsImgUrl"/>
+                                    <img slot="reference" :src="scope.row.goodsImgUrl" :alt="scope.row.goodsImgUrl" style="max-height: 50px;max-width: 130px">
+                                </el-popover>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="单价"    prop="price"></el-table-column>
+                        <el-table-column label="数量"    prop="quantity"></el-table-column>
+                        <el-table-column label="总价"    prop="amount"></el-table-column>
+                    </el-table>
+                </template>
+            </el-table-column>
+            <el-table-column prop="orderNo" label="订单号" width="200" >
+                <template slot-scope="scope">
+                    <a href="javascript:;" @click="twbOrderVm.erpOrderDetail(scope.row.orderNo)">{{scope.row.orderNo}}</a>
+                </template>
+            </el-table-column>
+
+
+            <el-table-column prop="memberName" label="客户名称"></el-table-column>
+
+            <el-table-column prop="payStatus" label="付款状态"  width="200"
+              :filters="[{ text: '已支付', value: 1 }, { text: '未支付', value: 0 }]"
+              filter-placement="bottom-end"  :filter-method="filterPayStatus"
+            >
+            <template slot-scope="scope">
+                    <el-tag
+                            :type="scope.row.payStatus ===0 ? 'primary' : 'success'"
+                            disable-transitions>{{scope.row.payStatus==0?"未支付":"已支付"}}</el-tag>
+            </template>
+            </el-table-column>
+
+            <el-table-column prop="totalAmount" label="订单金额"  width="100"></el-table-column>
+
+            <el-table-column prop="pmtGoods" label="优惠金额"  width="100"></el-table-column>
+
+            <el-table-column prop="payableAmount" label="应付金额"  width="100"></el-table-column>
+
+            <el-table-column prop="payed" label="已支付金额"  width="100"></el-table-column>
+
+            <el-table-column prop="payment" label="支付方式"  width="100"></el-table-column>
+
+            <el-table-column prop="orderCreatetime" label="下单时间"></el-table-column>
+
+
+        </el-table>
+
+        <!--分页插件-->
+        <div style="text-align: center;margin: 15px">
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="page.currentPage"
+                    :page-sizes="page.pageSizes"
+                    :page-size="page.pageSize"
+                    layout="total, sizes, prev, pager, next"
+                    :total="page.total">
+            </el-pagination>
+        </div>
+
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">会员ID</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="orderInfo.memberId" placeholder="会员ID"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">会员名</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="orderInfo.memberName" placeholder="会员名"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">付款状态:0.未支付;1.已支付;</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="orderInfo.payStatus" placeholder="付款状态:0.未支付;1.已支付;"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品总值</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="orderInfo.totalAmount" placeholder="商品总值"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">调价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="orderInfo.discount" placeholder="调价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品促销优惠</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="orderInfo.pmtGoods" placeholder="商品促销优惠"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">订单应付金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="orderInfo.payableAmount" placeholder="订单应付金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">订单已支付金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="orderInfo.payed" placeholder="订单已支付金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">下单时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="orderInfo.orderCreatetime" placeholder="下单时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">收货时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="orderInfo.receivedTime" placeholder="收货时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">支付时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="orderInfo.paymentTime" placeholder="支付时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">支付方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="orderInfo.payment" placeholder="支付方式"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">支付单号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="orderInfo.paymentId" placeholder="支付单号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">伪删除标记（0正常 1删除）</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="orderInfo.del" placeholder="伪删除标记（0正常 1删除）"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/orderInfo/orderinfo.js?_${.now?long}"></script>
+</body>
+</html>

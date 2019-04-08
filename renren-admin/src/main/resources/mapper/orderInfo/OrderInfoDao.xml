@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.orderInfo.dao.OrderInfoDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.orderInfo.entity.OrderInfoEntity" id="orderInfoMap">
+        <result property="orderNo" column="order_no"/>
+        <result property="memberId" column="member_id"/>
+        <result property="memberName" column="member_name"/>
+        <result property="payStatus" column="pay_status"/>
+        <result property="totalAmount" column="total_amount"/>
+        <result property="discount" column="discount"/>
+        <result property="pmtGoods" column="pmt_goods"/>
+        <result property="payableAmount" column="payable_amount"/>
+        <result property="payed" column="payed"/>
+        <result property="orderCreatetime" column="order_createtime"/>
+        <result property="receivedTime" column="received_time"/>
+        <result property="paymentTime" column="payment_time"/>
+        <result property="payment" column="payment"/>
+        <result property="paymentId" column="payment_id"/>
+        <result property="del" column="del"/>
+    </resultMap>
+
+
+    <resultMap id="OrderItemMap" type="io.renren.modules.orderInfo.dto.OrderInfoDto">
+        <id property="orderNo" column="order_no"/>
+        <result property="memberName" column="member_name"/>
+        <result property="payStatus" column="pay_status"/>
+        <result property="totalAmount" column="total_amount"/>
+        <result property="pmtGoods" column="pmt_goods"/>
+        <result property="payment" column="payment"/>
+        <result property="payed" column="payed"/>
+        <result property="pmtGoods" column="pmt_goods"/>
+        <result property="payableAmount" column="payable_amount"/>
+        <result property="orderCreatetime" column="order_createtime"/>
+        <collection property="orderItemList"  ofType="io.renren.modules.orderItem.entity.OrderItemEntity">
+            <result property="skuId" column="sku_id"/>
+            <result property="goodsImgUrl" column="goods_img_url"/>
+            <result property="price" column="price"/>
+            <result property="quantity" column="quantity"/>
+            <result property="price" column="price"/>
+            <result property="amount" column="amount"/>
+            <result property="payAmount" column="pay_amount"/>
+        </collection>
+
+    </resultMap>
+
+    <sql id="param_list">
+        oi.order_no,
+        oi.member_name,
+        oi.total_amount,
+        oi.pmt_goods,
+        oi.pay_status,
+        oi.payable_amount,
+        oi.payment,
+        oi.payed,
+        oi.order_createtime,
+        oii.sku_id,
+        oii.goods_img_url,
+        oii.price,
+        oii.quantity,
+        oii.amount,
+        oii.pay_amount
+
+    </sql>
+
+
+    <select id="queryPageOrderList" resultMap="OrderItemMap">
+    SELECT
+        <include refid="param_list"></include>
+    FROM
+        order_info oi
+        LEFT JOIN order_item oii ON oi.order_no = oii.order_id
+     <where>
+        <if test="map.orderNo!=null and map.orderNo!=''">
+            AND oi.order_no like  CONCAT ('%',#{map.orderNo},'%')
+        </if>
+         <if test="map.memberName!=null and map.memberName!=''">
+             AND oi.member_name like  CONCAT ('%',#{map.memberName},'%')
+         </if>
+         <if test="map.payment!=null and map.payment!=''">
+             AND oi.payment like  CONCAT ('%',#{map.payment},'%')
+         </if>
+         <if test="map.startTime!=null and map.startTime!=''">
+             AND oi.order_createtime<![CDATA[ >= ]]>#{map.startTime}
+         </if>
+         <if test="map.endTime!=null and map.endTime!=''">
+             AND oi.order_createtime<![CDATA[ <= ]]>#{map.endTime}
+         </if>
+      </where>
+    <choose>
+        <when test="map.current!=null">
+            limit #{map.current} ,#{map.limit}
+        </when>
+        <otherwise>
+            limit 0,20
+        </otherwise>
+    </choose>
+    </select>
+
+
+    <select id="selectOrderTotal" resultType="java.lang.Integer">
+        SELECT
+        COUNT(1)
+        FROM
+        order_info oi
+        <where>
+            <if test="map.orderNo!=null and map.orderNo!=''">
+                AND oi.order_no like  CONCAT ('%',#{map.orderNo},'%')
+            </if>
+            <if test="map.memberName!=null and map.memberName!=''">
+                AND oi.member_name like  CONCAT ('%',#{map.memberName},'%')
+            </if>
+            <if test="map.payment!=null and map.payment!=''">
+                AND oi.payment like  CONCAT ('%',#{map.payment},'%')
+            </if>
+            <if test="map.startTime!=null and map.startTime!=''">
+                AND oi.order_createtime<![CDATA[ >= ]]>#{map.startTime}
+            </if>
+            <if test="map.endTime!=null and map.endTime!=''">
+                AND oi.order_createtime<![CDATA[ <= ]]>#{map.endTime}
+            </if>
+        </where>
+    </select>
+
+</mapper>
