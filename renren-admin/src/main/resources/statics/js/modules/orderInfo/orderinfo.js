@@ -4,6 +4,8 @@ var vm = new Vue({
 		showList: true,
 		title: null,
 		orderInfo: {},
+        goodsData:[], //商品列表
+        addVisible:false,
         //查询参数
 		q: {
 			orderNo: '',
@@ -12,9 +14,12 @@ var vm = new Vue({
             startTime: '',
             endTime: '',
             createTime:null,
+            productKey:'' //商品搜索关键字
 		},
 		//订单信息
         orderData:[],
+		//商品明细
+		orderItemData:[],
 		//分页参数
         page: {currentPage: 0, pageSizes: [20, 50, 100], pageSize: 20, total: 0, ascending: [], descending: []},
 	},
@@ -64,10 +69,45 @@ var vm = new Vue({
 		    this.query();
 		},
 		add: function(){
-			vm.showList = false;
-			vm.title = "新增";
-			vm.orderInfo = {};
+			var url="product/product/productlist";
+			var data={"key":vm.q.productKey};
+            $.ajax({
+                type: "POST",
+                url: baseURL + url,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function(r){
+                    if(r.code === 0){
+                        vm.goodsData=r.goodsData;
+                        vm.orderInfo = {};
+                        vm.addVisible = true;
+                    }else{
+                        alert(r.msg);
+                    }
+                }
+            });
 		},
+		//查询商品
+        queryGoods: function(){
+                var url="product/product/productlist";
+                var data={"key":vm.q.productKey};
+                $.ajax({
+                    type: "POST",
+                    url: baseURL + url,
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function(r){
+                        if(r.code === 0){
+                            vm.goodsData=r.goodsData;
+                        }else{
+                            alert(r.msg);
+                        }
+                    }
+                });
+        },
+
+
+
 		update: function (event) {
 			var orderNo = getSelectedRow();
 			if(orderNo == null){
@@ -145,6 +185,6 @@ var vm = new Vue({
 		//筛选订单支付状态
         filterPayStatus:function (value, row) {
             return row.payStatus === value;
-        }
+        },
 	}
 });
