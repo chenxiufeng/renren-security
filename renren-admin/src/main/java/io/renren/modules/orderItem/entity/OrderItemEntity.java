@@ -62,7 +62,7 @@ public class OrderItemEntity implements Serializable {
 	/**
 	 * 是否删除（true：是；false：否）
 	 */
-	private Boolean deleted;
+	private Integer deleted;
 	/**
 	 * 删除时间
 	 */
@@ -199,13 +199,13 @@ public class OrderItemEntity implements Serializable {
 	/**
 	 * 设置：是否删除（true：是；false：否）
 	 */
-	public void setDeleted(Boolean deleted) {
+	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
 	}
 	/**
 	 * 获取：是否删除（true：是；false：否）
 	 */
-	public Boolean getDeleted() {
+	public Integer getDeleted() {
 		return deleted;
 	}
 	/**

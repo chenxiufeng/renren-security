@@ -23,6 +23,7 @@
               OR sku_id LIKE CONCAT('%',#{map.key},'%')
           </if>
       </where>
+        limit 5
     </select>
 
 </mapper>

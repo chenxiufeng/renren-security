@@ -148,16 +148,38 @@
                     </el-popover>
                 </template>
             </el-table-column>
+
+            <el-table-column
+                    fixed="right"
+                    label="操作"
+                    width="120">
+                <template slot-scope="scope">
+                    <el-button
+                            @click="addProduct(scope.row)"
+                            icon="el-icon-plus"
+                            type="danger"
+                            size="small">
+                    </el-button>
+                </template>
+            </el-table-column>
+
         </el-table>
 
          <!--商品明细-->
-        <div style="text-align:center;font-size: 10px">商品明细</div>
+        <div style="text-align:left;font-size: 20px">订单明细</div>
         <el-table :data="orderItemData" border style="margin-top: 10px" size="small">
             <el-table-column property="skuId" label="货品ID" width="150"></el-table-column>
             <el-table-column property="name" label="商品名称" width="150"></el-table-column>
+            <el-table-column property="quantity" label="数量" width="150" >
+                <template scope="scope">
+                <el-input v-model="scope.row.quantity" @change="changeNums(scope.row,scope.$index)"  type="number" :min="1" size="small"></el-input>
+                </template>
+            </el-table-column>
             <el-table-column property="price" label="价格"></el-table-column>
+            <el-table-column property="amount" label="商品总价">
+            </el-table-column>
             <el-table-column property="detailedinfo" label="商品详请"></el-table-column>
-            <el-table-column label="图片"    prop="goodsImgUrl">
+            <el-table-column label="图片"  prop="goodsImgUrl">
                 <!-- 图片的显示 -->
                 <template slot-scope="scope">
                     <el-popover
@@ -171,9 +193,11 @@
             </el-table-column>
         </el-table>
 
+        <span slot="footer" >
+             <div style="margin: 10px;font-size: 20px;color:salmon">订单总金额：￥{{total}} 元</div>
+             <el-button type="primary" size="small" icon="el-icon-sold-out" @click="save">提交订单</el-button>
+          </span>
     </el-dialog>
-
-
 
 </div>
 

@@ -89,6 +89,8 @@
              AND oi.order_createtime<![CDATA[ <= ]]>#{map.endTime}
          </if>
       </where>
+        order by
+        oi.order_createtime desc
     <choose>
         <when test="map.current!=null">
             limit #{map.current} ,#{map.limit}
@@ -97,6 +99,7 @@
             limit 0,20
         </otherwise>
     </choose>
+
     </select>
 
 

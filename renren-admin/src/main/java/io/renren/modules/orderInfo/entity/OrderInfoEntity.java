@@ -2,6 +2,7 @@ package io.renren.modules.orderInfo.entity;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 
 import java.math.BigDecimal;
 import java.io.Serializable;
@@ -21,7 +22,7 @@ public class OrderInfoEntity implements Serializable {
 	/**
 	 * 订单号
 	 */
-	@TableId
+	@TableId(type = IdType.INPUT)
 	private Long orderNo;
 	/**
 	 * 会员ID

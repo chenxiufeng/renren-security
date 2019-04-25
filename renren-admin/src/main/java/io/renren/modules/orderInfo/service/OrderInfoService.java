@@ -3,6 +3,7 @@ package io.renren.modules.orderInfo.service;
 import com.baomidou.mybatisplus.service.IService;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
+import io.renren.modules.orderInfo.dto.OrderInfoItemDto;
 import io.renren.modules.orderInfo.entity.OrderInfoEntity;
 
 import java.util.Map;
@@ -19,5 +20,7 @@ public interface OrderInfoService extends IService<OrderInfoEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     R queryPageOrderList(Map<String,Object> params);
+
+    R saveOrder(OrderInfoItemDto orderInfoItemDto);
 }
 

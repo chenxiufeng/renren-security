@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import io.renren.common.validator.ValidatorUtils;
+import io.renren.modules.orderInfo.dto.OrderInfoItemDto;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -54,10 +55,8 @@ public class OrderInfoController {
      */
     @RequestMapping("/save")
    /* @RequiresPermissions("orderInfo:orderinfo:save")*/
-    public R save(@RequestBody OrderInfoEntity orderInfo){
-        orderInfoService.insert(orderInfo);
-
-        return R.ok();
+    public R save(@RequestBody OrderInfoItemDto orderInfoItemDto){
+        return orderInfoService.saveOrder(orderInfoItemDto);
     }
 
     /**

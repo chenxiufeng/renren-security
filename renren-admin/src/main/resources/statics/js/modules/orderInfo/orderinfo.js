@@ -18,6 +18,7 @@ var vm = new Vue({
 		},
 		//订单信息
         orderData:[],
+        order:{orderInfo:{},orderItemData:[]},
 		//商品明细
 		orderItemData:[],
 		//分页参数
@@ -26,6 +27,15 @@ var vm = new Vue({
 	//页面渲染完成后执行
     mounted: function () {
         this.query();
+    },
+    computed:{
+	    total:function () {
+            let total=0;
+            for(var i=0;i<this.orderItemData.length;i++){
+                total=Number(this.orderItemData[i].amount)+total;
+            }
+            return total;
+        }
     },
 	methods: {
 		query: function () {
@@ -118,16 +128,18 @@ var vm = new Vue({
             
             vm.getInfo(orderNo)
 		},
-		saveOrUpdate: function (event) {
-			var url = vm.orderInfo.orderNo == null ? "orderInfo/orderinfo/save" : "orderInfo/orderinfo/update";
+		save: function (event) {
+			var url = "orderInfo/orderinfo/save";
+			vm.order.orderItemData=vm.orderItemData;
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,
                 contentType: "application/json",
-			    data: JSON.stringify(vm.orderInfo),
+			    data: JSON.stringify(vm.order),
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){
+						    vm.addVisible=false;
 							vm.reload();
 						});
 					}else{
@@ -166,11 +178,7 @@ var vm = new Vue({
             });
 		},
 		reload: function (event) {
-			vm.showList = true;
-			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
-                page:page
-            }).trigger("reloadGrid");
+			vm.reset();
 		},
         // 页数变化
         handleSizeChange: function (val) {
@@ -185,6 +193,22 @@ var vm = new Vue({
 		//筛选订单支付状态
         filterPayStatus:function (value, row) {
             return row.payStatus === value;
+        },
+        //新增商品
+        addProduct:function (row) {
+            var item={skuId:'',name:'',detailedinfo:'',quantity:1,price:'',amount:'',goodsImgUrl:''};
+            var self =this;
+            item.price=row.price;
+            item.amount=(item.quantity*item.price).toFixed(2);
+            item.skuId=row.skuId;
+            item.detailedinfo=row.detailedinfo;
+            item.name=row.name;
+            item.goodsImgUrl=row.goodsImgUrl;
+            self.orderItemData.push(item);
+        },
+        //新增，修改商品及其数量
+        changeNums:function (row,index) {
+		   row.amount=(row.price*row.quantity).toFixed(2);
         },
 	}
 });
