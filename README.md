@@ -109,37 +109,7 @@ renren-security
 - 需要配置【renren.redis.open=true】，表示开启redis缓存
 - 需要配置【renren.shiro.redis=true】，表示把shiro session存到redis里
 
-<br>
 
- **项目演示**
-- 演示地址：http://demo.open.renren.io/renren-security
-- 账号密码：admin/admin
-
-<br>
-
-**如何交流、反馈、参与贡献？** 
-- 开发文档：http://www.renren.io/guide/security
-- 官方社区：http://www.renren.io/community
-- gitee仓库：https://gitee.com/renrenio/renren-security
-- github仓库：https://github.com/renrenio/renren-security
-- [人人开源](http://www.renren.io)：http://www.renren.io   
-- 官方QQ群：324780204、145799952
-- 如需关注项目最新动态，请Watch、Star项目，同时也是对项目最好的支持
-- 技术讨论、二次开发等咨询、问题和建议，请移步到官方社区，我会在第一时间进行解答和回复！
-- 微信扫码并关注【人人开源】，获得项目最新动态及更新提醒<br>
-![输入图片说明](http://cdn.renren.io/47c26201804031918312618.jpg "在这里输入图片标题")
-<br>
-<br>
-
-**接口文档效果图：** 
-![输入图片说明](http://cdn.renren.io/img/c8dae596146248d8b4d0639738c2932b "在这里输入图片标题")
-
-<br>
-
-**Layui主题风格：**
-![输入图片说明](http://cdn.renren.io/img/1013aa91fe8542b7b05d82bc9444433a "在这里输入图片标题")
-
-<br>
 
 **AdminLTE主题风格：**
 ![输入图片说明](http://cdn.renren.io/img/f9762bc6574545ce908e271995efcf1c "在这里输入图片标题")
@@ -153,4 +123,3 @@ renren-security
 
 <br>
 
-![捐赠](http://cdn.renren.io/donate.jpg "捐赠") 
