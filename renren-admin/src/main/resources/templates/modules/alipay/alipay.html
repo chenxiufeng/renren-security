@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <#include "/header.html">
+    <!-- 二维码 -->
+    <script src="${request.contextPath}/statics/js/qrcode/1.0/jquery.qrcode.min.js"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <el-input v-model="code"  size="small"  style="width: 200px" placeholder="请输入支付宝条形码"></el-input>
+    <el-button size="small" type="primary" @click="zhifu">当面支付</el-button>
+
+    <el-input v-model="tradeNo"  size="small" style="width: 200px" placeholder="请输入交易单号"></el-input>
+    <el-button size="small" type="primary" @click="queryPayResult">查询交易结果</el-button>
+    <div style="margin-top: 10px">
+    <span>生成二维码支付</span>
+    <el-button size="small" type="primary"  @click="qrCodePay">生成二维码</el-button>
+    <el-input v-model="money"  size="small"  type="number" :min="0" style="width: 200px" placeholder="请输入订单金额"></el-input> 元
+    <div id="qrcode"></div>
+    </div>
+
+</div>
+<script src="${request.contextPath}/statics/js/modules/alipay/alipay.js?_${.now?long}"></script>
+</body>
+</html>

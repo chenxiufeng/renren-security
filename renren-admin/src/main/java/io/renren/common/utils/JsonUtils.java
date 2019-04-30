@@ -1,6 +1,7 @@
 package io.renren.common.utils;
 
 
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,8 +10,14 @@ import java.util.Map.Entry;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JsonUtils {
+
+
+	private static final Logger log = LoggerFactory.getLogger(JsonUtils.class);
+
 
 	private final static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -83,4 +90,32 @@ public class JsonUtils {
 	public static <T> T map2pojo(Map map, Class<T> clazz) {
 		return objectMapper.convertValue(map, clazz);
 	}
+
+
+	/**
+	 * 将对象转换为 JSON 的字符串格式
+	 *
+	 * @param object
+	 * @return
+	 */
+	public static String object2String(Object object) {
+		return object2String(object, false);
+	}
+
+	public static String object2String(Object object, boolean prettyFormat) {
+		StringWriter writer = new StringWriter();
+		try {
+			if (prettyFormat) {
+				objectMapper.writerWithDefaultPrettyPrinter().writeValue(writer, object);
+			} else {
+				objectMapper.writeValue(writer, object);
+			}
+		} catch (Exception e) {
+			log.error("将 object 转换为 json 字符串时发生异常:{}", e);
+			return null;
+		}
+		return writer.toString();
+	}
+
+
 }

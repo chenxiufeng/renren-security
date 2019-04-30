@@ -9,6 +9,21 @@
 	<packaging>jar</packaging>
 	<description>renren-common</description>
 
+	<dependencies>
+	<dependency>
+		<groupId>com.alipay.sdk</groupId>
+		<artifactId>alipay-sdk-java</artifactId>
+		<version>3.3.49.ALL</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+	</dependency>
+
+	</dependencies>
+
+
 	<build>
 		<finalName>${project.artifactId}</finalName>
 	</build>

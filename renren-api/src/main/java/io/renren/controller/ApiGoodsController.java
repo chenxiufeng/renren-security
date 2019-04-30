@@ -1,8 +1,6 @@
 package io.renren.controller;
 
 import io.renren.common.utils.R;
-import io.renren.common.validator.ValidatorUtils;
-import io.renren.form.LoginForm;
 import io.renren.service.GoodsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,4 +30,5 @@ public class ApiGoodsController {
     public R goodsList(@RequestBody Map<String,Object> map){
        return goodsService.goodsList(map);
     }
+
 }
